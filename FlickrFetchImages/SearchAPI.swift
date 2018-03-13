@@ -11,15 +11,18 @@ import Foundation
 
 let apiKey = "772f62d9f00b08bfd98de070cd54ba8e"
 
+var test:UIImage?
+
 class SearchAPI {
-    
+    let processingQueue = OperationQueue()
+
     func searchURLWithSearchParams (searchParam: String) -> URL? {
         
         guard let escapedTerm = searchParam.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) else {
             return nil
         }
         
-        let URLString = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(apiKey)&text=\(escapedTerm)&per_page=20&format=json&nojsoncallback=1"
+        let URLString = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(apiKey)&text=\(escapedTerm)&per_page=30&format=json&nojsoncallback=1"
         
         guard let url = URL(string:URLString) else {
             return nil
@@ -28,7 +31,7 @@ class SearchAPI {
         return url
     }
     
-    func searchWithSearchParams(searchParam: String, completion: @escaping (_ result: SearchResutls?, _ error: NSError?) ->Void) {
+    func searchWithSearchParams(searchParam: String, handler:  @escaping (_ result: SearchResutls?, _ error: NSError?) ->Void) {
         let searchURL = searchURLWithSearchParams(searchParam: searchParam)
         
         let searchResult = URLRequest(url: searchURL!)
@@ -37,7 +40,7 @@ class SearchAPI {
             do {
                 guard let results = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue: 0)) as? [String: AnyObject]
                     else {
-                        completion(nil, nil)
+                        handler(nil, nil)
                         return
                 }
                 
@@ -54,20 +57,32 @@ class SearchAPI {
                     
                     let photoObject = Photo(photoID: photoID!, farm: farm!, server: server!, secret: secret!)
                     
-                  let photoURL = photoObject.imageURL()
+                    let photoURL = photoObject.imageURL()
+                    print(photoURL!)
+                    OperationQueue.main.addOperation {
+                        
+                    
                     let photoData = try? Data(contentsOf: photoURL as! URL)
                     
-                    if let image = UIImage(data: photoData!) {
+                        DispatchQueue.main.async {
+                            
+                        
+                        if let image = UIImage(data: photoData!) {
                         photoObject.photoImage = image
+                            test=image
                         photos.append(photoObject)
                     }
+                        }
+                    }
                 }
-                DispatchQueue.global(qos: .background).async {
-                    completion(SearchResutls(searchString: searchParam, searchResults: photos), nil)
+                OperationQueue.main.addOperation {
+                    print("------------------------->PH: \(photos)")
+                    handler(SearchResutls(searchString: searchParam, searchResults: photos), nil)
+                    
                 }
                 
             } catch _ {
-                completion(nil, nil)
+                handler(nil, nil)
                 return
             }
         }) .resume()

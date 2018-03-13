@@ -10,8 +10,8 @@ import UIKit
 
 
 
-class ViewController: UICollectionViewController, UITextFieldDelegate {
-
+class ViewController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
+    
     let reuseIdentifier = "ImageCell"
     
     let searchAPI = SearchAPI()
@@ -20,8 +20,10 @@ class ViewController: UICollectionViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.navigationController?.navigationBar.prefersLargeTitles = true
 
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
     }
 
@@ -32,13 +34,14 @@ class ViewController: UICollectionViewController, UITextFieldDelegate {
 
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        DispatchQueue.main.async {
-            self.searchAPI.searchWithSearchParams(searchParam: "hello") {
+            self.searchAPI.searchWithSearchParams(searchParam: textField.text!) {
             results, error in
             if let results = results {
-                self.searchResults.insert(results, at: 0)
+                self.searchResults = [results]
+                print("res: \(results)")
+                
+                self.collectionView?.reloadData()
             }
-        }
         }
         textField.text = nil
         textField.resignFirstResponder()
@@ -46,7 +49,7 @@ class ViewController: UICollectionViewController, UITextFieldDelegate {
     }
     
     func photoForIndexPath(_ indexPath: IndexPath) -> Photo {
-        return searchResults[(indexPath as NSIndexPath).section].searchResults[(indexPath as NSIndexPath).row]
+        return searchResults[indexPath.section].searchResults[indexPath.row]
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -64,11 +67,38 @@ class ViewController: UICollectionViewController, UITextFieldDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
         
         let photo = photoForIndexPath(indexPath)
-        cell.imageView.image = photo.photoImage
-        
-        
+        cell.imageView?.image = photo.photoImage
+        cell.backgroundColor = UIColor.gray
         return cell
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let itemSize = searchResults[indexPath.section].searchResults[indexPath.row].photoImage?.size
+        let itemWidth = itemSize?.width
+        let itemHeight = itemSize?.height
+        let itemAspectRation = CGFloat(itemWidth! / itemHeight!)
+        var cellWidth: CGFloat?
+        var cellHeight: CGFloat?
+        
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            cellWidth = ( (self.collectionView?.frame.width)! ) / 6 - 4
+            cellHeight = cellWidth! / itemAspectRation
+        case .phone:
+            cellWidth = ( (self.collectionView?.frame.width)! ) / UIScreen.main.scale - 4
+            cellHeight = cellWidth! / itemAspectRation
+        default:
+            print("Error")
+        }
+        return CGSize(width: cellWidth!, height: cellHeight!)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        collectionView?.collectionViewLayout.invalidateLayout()
+        collectionView?.reloadData()
+    }
+    
 }
 
