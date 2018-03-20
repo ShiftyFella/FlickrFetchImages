@@ -18,6 +18,8 @@ class ViewController: UICollectionViewController, UITextFieldDelegate, UICollect
     
     var searchResults = [SearchResutls]()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,6 +100,27 @@ class ViewController: UICollectionViewController, UITextFieldDelegate, UICollect
         super.viewWillTransition(to: size, with: coordinator)
         collectionView?.collectionViewLayout.invalidateLayout()
         collectionView?.reloadData()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            
+            if let indexPath = self.collectionView?.indexPath(for: sender as! UICollectionViewCell) {
+                
+                let detailView = segue.destination  as! DetailView
+                
+                let photo = photoForIndexPath(indexPath)
+                
+                detailView.largeImage = photo.photoImage
+                detailView.titleInfo = photo.title
+                
+                //self.navigationController?.pushViewController(detailView, animated: true)
+            }
+        }
     }
     
 }

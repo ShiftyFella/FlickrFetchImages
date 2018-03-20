@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -48,6 +49,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="Jz8-Ok-zbC" id="l4v-P6-0Qu"/>
+                                    <segue destination="Sx3-kt-sv7" kind="show" identifier="showDetail" id="EPG-xD-wor"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -75,6 +77,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q9N-KK-fO4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="581.60000000000002" y="-66.11694152923539"/>
+        </scene>
+        <!--Detail View-->
+        <scene sceneID="jG7-sz-Ur2">
+            <objects>
+                <viewController id="Sx3-kt-sv7" customClass="DetailView" customModule="FlickrFetchImages" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UWK-VM-PHa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w63-qw-Hpx">
+                                <rect key="frame" x="8" y="72" width="359" height="543"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="D8t-6f-Orm" firstAttribute="trailing" secondItem="w63-qw-Hpx" secondAttribute="trailing" constant="8" id="FEb-Sj-1Jl"/>
+                            <constraint firstItem="w63-qw-Hpx" firstAttribute="leading" secondItem="D8t-6f-Orm" secondAttribute="leading" constant="8" id="MMp-zW-UTl"/>
+                            <constraint firstItem="D8t-6f-Orm" firstAttribute="bottom" secondItem="w63-qw-Hpx" secondAttribute="bottom" constant="8" id="cUZ-aN-7ZC"/>
+                            <constraint firstItem="w63-qw-Hpx" firstAttribute="top" secondItem="D8t-6f-Orm" secondAttribute="top" constant="8" id="qVV-CP-dql"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="D8t-6f-Orm"/>
+                    </view>
+                    <connections>
+                        <outlet property="largeImageView" destination="w63-qw-Hpx" id="lHt-6L-LBD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ovy-Tg-hzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1312.8" y="-66.11694152923539"/>
         </scene>
         <!--Hello-->
         <scene sceneID="xrF-Vq-ZRC">

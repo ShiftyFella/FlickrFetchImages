@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7783F4E020607EFC00E3FBDD /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783F4DF20607EFC00E3FBDD /* DetailView.swift */; };
 		77D11E0F20575F9800B957AF /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D11E0E20575F9800B957AF /* PhotoCell.swift */; };
 		77E9B8EE2057439D001F7E62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9B8ED2057439D001F7E62 /* AppDelegate.swift */; };
 		77E9B8F02057439D001F7E62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9B8EF2057439D001F7E62 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7783F4DF20607EFC00E3FBDD /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		77D11E0E20575F9800B957AF /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		77E9B8EA2057439D001F7E62 /* FlickrFetchImages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrFetchImages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E9B8ED2057439D001F7E62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				77E9B90120574D20001F7E62 /* SearchResutls.swift */,
 				77E9B90320574EB1001F7E62 /* SearchAPI.swift */,
 				77D11E0E20575F9800B957AF /* PhotoCell.swift */,
+				7783F4DF20607EFC00E3FBDD /* DetailView.swift */,
 			);
 			path = FlickrFetchImages;
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 				77E9B90420574EB1001F7E62 /* SearchAPI.swift in Sources */,
 				77E9B9002057488A001F7E62 /* Photo.swift in Sources */,
 				77E9B8F02057439D001F7E62 /* ViewController.swift in Sources */,
+				7783F4E020607EFC00E3FBDD /* DetailView.swift in Sources */,
 				77E9B90220574D20001F7E62 /* SearchResutls.swift in Sources */,
 				77D11E0F20575F9800B957AF /* PhotoCell.swift in Sources */,
 				77E9B8EE2057439D001F7E62 /* AppDelegate.swift in Sources */,

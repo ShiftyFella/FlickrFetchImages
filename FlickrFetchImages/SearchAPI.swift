@@ -54,8 +54,9 @@ class SearchAPI {
                     let farm = photoReturned["farm"] as? Int
                     let server = photoReturned["server"] as? String
                     let secret = photoReturned["secret"] as? String
+                    let title = photoReturned["title"] as? String
                     
-                    let photoObject = Photo(photoID: photoID!, farm: farm!, server: server!, secret: secret!)
+                    let photoObject = Photo(photoID: photoID!, farm: farm!, server: server!, secret: secret!, title: title!)
                     
                     let photoURL = photoObject.imageURL()
                     print(photoURL!)
